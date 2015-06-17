@@ -1,0 +1,84 @@
+---
+title: "Regression models project"
+output:
+  html_document:
+    keep_md: yes
+  pdf_document: default
+---
+
+# Executive summary
+
+First of all, we load the required packages
+```{r load libraries, warning=FALSE}
+library(ggplot2)
+library(reshape2)
+```
+
+For convenience, we convert the 'am' variable, indicating the type of transmission, to a factor variable. The new variable will have to levels:
+``` 
+  - 'auto': automatic transmission
+  - 'manual': manual transmission
+```
+
+```{r as.factor}
+mtcars$am = as.factor(1 - mtcars$am)
+levels(mtcars$am) = c("manual", "auto")
+mtcars$am
+```
+
+We fit a model for miles per gallon, using the type of transmission as the only predictor 
+```{r first model}
+model = glm(mpg ~ am, data = mtcars)
+summary(model)
+```
+
+The model suggests that the type of transmission is a good predictor for the miles per gallon variable. On average, the following results could be reported:
+
+```
+  - 'manual' transmission: 24.392 mpg
+  - 'automatic' transmission: 17.147 mpg
+```
+
+For the convenience of the reader, a boxplot is attached in the Appendix.
+
+Nonetheless, examining the correlation between the variables (in Appendix), the type of transmission seems to be negatively correlated to the weight of the car. That is, in the proposed dataset only 'big', heavy car are equipped with automatic transmission. Typically, the heavier the car, the lower the mpg.
+
+If we fit another model for mpg, with both weigth and transmission as predictiors, we found out that the type of transmission is no longer significative, with a p-value of 0.988, whereas weight is a good predictor for miles per gallon.
+
+```{r second model}
+model = glm(mpg ~ am + wt, data = mtcars)
+summary(model)
+```
+
+In conclusion, a naive analysis would highlight a strong correlation between the type of transmission and fuel consumption. Nonetheless, the dataset seems to be biased so that bigger cars have automatic transmission, whereas smaller ones have manual transmission. If weight is considered, the type of transmission is no longer significative in predicting the output variable.
+
+
+
+# Appendix
+
+Correlation between type of transmission and other variables in the dataset.
+
+ ```{r, echo=FALSE, fig.width = 3, fig.height = 3}
+mtcars2 = mtcars
+mtcars2$am = as.numeric(mtcars2$am)
+qplot(x="transmission", y=Var2, data=melt(cor((1 -mtcars2$am), mtcars2, use="p")), fill=value, geom="tile") + scale_fill_gradient2(limits=c(-1, 1))
+```
+
+Boxplot of miles per gallon as a function of the type of transmission:
+
+ ```{r, echo=FALSE, fig.width = 5, fig.height = 5}
+plot(mtcars$am, mtcars$mpg)
+```
+
+Plot of miles per gallon as a function of the weight of the car:
+
+ ```{r, echo=FALSE, fig.width = 5, fig.height = 5}
+plot(mtcars$wt, mtcars$mpg, xlab = "weight", ylab = "mpg")
+```
+
+Boxplot of car weight as a function of the type of transmission. Bigger cars tend to have automatic transmission:
+
+ ```{r, echo=FALSE, fig.width = 5, fig.height = 5}
+plot(mtcars$am, mtcars$wt)
+```
+
