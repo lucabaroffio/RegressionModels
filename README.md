@@ -115,17 +115,17 @@ In conclusion, a naive analysis would highlight a strong correlation between the
 
 Correlation between type of transmission and other variables in the dataset.
 
- ![](Untitled_files/figure-html/unnamed-chunk-1-1.png) 
+ ![](Report_files/figure-html/unnamed-chunk-1-1.png) 
 
 Boxplot of miles per gallon as a function of the type of transmission:
 
- ![](Untitled_files/figure-html/unnamed-chunk-2-1.png) 
+ ![](Report_files/figure-html/unnamed-chunk-2-1.png) 
 
 Plot of miles per gallon as a function of the weight of the car:
 
- ![](Untitled_files/figure-html/unnamed-chunk-3-1.png) 
+ ![](Report_files/figure-html/unnamed-chunk-3-1.png) 
 
 Boxplot of car weight as a function of the type of transmission. Bigger cars tend to have automatic transmission:
 
- ![](Untitled_files/figure-html/unnamed-chunk-4-1.png) 
+ ![](Report_files/figure-html/unnamed-chunk-4-1.png) 
 
